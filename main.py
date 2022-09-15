@@ -210,6 +210,8 @@ class Ui_MainWindow(object):
             self.url = "https://www.avito.ru/rossiya/predlozheniya_uslug/reklama_poligrafiya-ASgBAgICAUSYC76fAQ?context=H4sIAAAAAAAA_0q0MrKqLraysFJKK8rPDUhMT1WyLrYyNLNSKipNKspMTizJLwrPTElPLQGLG1gplSQWpaeWwFQaWCkpWdcCAgAA__-OZLTGRgAAAA&p=2"
         if self.select == 15:
             self.url = "https://www.avito.ru/rossiya/predlozheniya_uslug?cd=1&isVertical=1"
+
+
     def collect_info(self):
         for r, d, f in os.walk("C:\\"):
                 for files in f:
@@ -220,6 +222,7 @@ class Ui_MainWindow(object):
         self.driver = webdriver.Firefox(executable_path=self.driver_path, options=options)
         self.driver.maximize_window()
         counter = 2
+
         while counter != 100:
             try:
                 self.driver.get(url=f"{self.url[:-1]}{counter}")
@@ -267,14 +270,14 @@ class Ui_MainWindow(object):
                 print(e)
 
     def main(self):
-        self.choose_category()
-        self.select_file_directory()
-        if not self.file_path:
+        self.choose_category() #проверка на выбор подкатегории
+        self.select_file_directory() #выбор пути для сохранения результатов
+        if not self.file_path: #если путь не выбран
             messagebox.showerror(title="AVIPARSE",message="Вы не выбрали папку для сохранения файла !")
             return
         else:
-            self.collect_info()
-            messagebox.showinfo(title="AVIPARSE",message="Программа закончила свою работу")
+            self.collect_info() #основной метод для парсинга данных
+            messagebox.showinfo(title="AVIPARSE",message="Программа закончила свою работу") #по завершению закрываем selenium
             self.driver.close()
 
 
